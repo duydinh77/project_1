@@ -1,23 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import 'antd/dist/antd.css';
+import './index.css';
+import { Row, Col, Typography } from 'antd';
+import Card from './modules/Card';
+const { Text } = Typography;
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Row gutter={16}>
+        <Col span={8} className="gutter-row">
+          <Text strong>Backlog</Text>
+          <Card></Card>
+        </Col>
+        <Col span={8} className="gutter-row">
+          <Text strong>Processing</Text>
+        </Col>
+        <Col span={8} className="gutter-row">
+          <Text strong>Done</Text>
+        </Col>
+      </Row>
     </div>
   );
 }
