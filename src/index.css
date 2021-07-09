@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.cart .cartItem {
+  background-color: #f0f0f0;
+}
+
+.cart .cartItem:hover {
+  cursor: pointer;
+  background-color: #e2e2e2;
+}
+
+.ant-form-item {
+  margin-bottom: 12px;
+}
