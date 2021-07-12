@@ -1,12 +1,17 @@
 import { React, useState } from 'react';
+import CardForm from './CardForm';
+import { useDispatch } from 'react-redux';
+import { editTask } from './slice';
 
 const CardItem = (props) => {
     const [editing, setEditing] = useState(false);
+    const dispatch = useDispatch();
     const handleClick = (e) => {
         setEditing(true);
     }
 
-    const handleSaveClick = (e) => {
+    const handleEditCard = (value) => {
+        dispatch(editTask(value));
         setEditing(false);
     }
 
@@ -14,13 +19,10 @@ const CardItem = (props) => {
     return (
         <li className="cardItem">
             {!editing &&
-                <span onClick={(e) => handleClick(e)}>{cardItem.taskName}</span>
+                <span add={(e) => handleClick(e)}>{cardItem.taskName}</span>
             }
             {editing &&
-                <div>
-                    <input type="text" defaultValue={cardItem.taskName} />
-                    <button type="button" onClick={(e) => handleSaveClick(e)}>Save</button>
-                </div>
+                <CardForm taskName={cardItem.taskName} handleEdit={() => handleEditCard()} isEditing></CardForm>
             }
         </li>
     );

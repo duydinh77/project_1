@@ -2,7 +2,7 @@ import './App.css';
 import 'antd/dist/antd.css';
 import './index.css';
 import { Row, Col, Typography } from 'antd';
-import Card from './modules/Card';
+import Card from './modules/Card/Card';
 const { Text } = Typography;
 
 function App() {
