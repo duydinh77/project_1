@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'antd';
 import CardForm from './CardForm';
 import CardItem from './CardItem';
-import { addNewTask, editTask, deleteTask, taskSelector } from './slice';
+import { addNewTask, taskSelector } from './slice';
 
 const Card = () => {
     const [isAddingCard, setIsAddingCard] = useState(false);
@@ -17,7 +17,9 @@ const Card = () => {
 
     const handleAddCard = (value) => {
         setIsAddingCard(false);
-        dispatch(addNewTask(value));
+        if(value) {
+            dispatch(addNewTask(value));
+        }
     }
 
     return (

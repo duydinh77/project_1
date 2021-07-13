@@ -1,12 +1,10 @@
-import { React, useState } from 'react';
+import { React } from 'react';
 import { Form, Input, Button, Space } from 'antd';
 
 const CardForm = (props) => {
-    const [form] = Form.useForm();
-
-    const handleCard = (e) => {
+    const handleClose = (e) => {
         if (props.isEditing) {
-            props.handleEdit();
+            props.handleEditCard();
         }
         if (props.isAdding) {
             props.handleAddCard();
@@ -15,7 +13,11 @@ const CardForm = (props) => {
 
     const handleAddCard = () => {
         const taskInput = document.querySelector('#task_input');
-        props.handleAddCard(taskInput.value);
+        if (taskInput) {
+            if (taskInput.value) {
+                props.handleAddCard(taskInput.value);
+            }
+        }
     }
 
     const handleEditCard = () => {
@@ -23,8 +25,12 @@ const CardForm = (props) => {
         props.handleEditCard(taskInput.value)
     }
 
+    const handleDeleteCard = () => {
+        props.handleDeleteCard();
+    }
+
     return (
-        <Form layout="vertical" form={form}>
+        <Form layout="vertical">
             <Form.Item name="cardName">
                 <Input id="task_input" defaultValue={props.taskName} />
             </Form.Item>
@@ -34,9 +40,12 @@ const CardForm = (props) => {
                         <Button type="primary" onClick={() => handleAddCard()}>Add a card</Button>
                     }
                     {props.isEditing &&
-                        <Button type="primary" onClick={() => handleEditCard()}>Save</Button>
+                        <>
+                            <Button type="primary" onClick={() => handleEditCard()}>Save</Button>
+                            <Button type="danger" onClick={() => handleDeleteCard()}>Delete</Button>
+                        </>
                     }
-                    <Button id="close-form" onClick={(e) => handleCard(e)}>Close</Button>
+                    <Button id="close-form" onClick={(e) => handleClose(e)}>Close</Button>
                 </Space>
             </Form.Item>
         </Form>

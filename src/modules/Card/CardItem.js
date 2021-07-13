@@ -1,28 +1,45 @@
 import { React, useState } from 'react';
 import CardForm from './CardForm';
 import { useDispatch } from 'react-redux';
-import { editTask } from './slice';
+import { deleteTask, editTask } from './slice';
 
 const CardItem = (props) => {
-    const [editing, setEditing] = useState(false);
+    const [editingCard, setEditing] = useState(false);
     const dispatch = useDispatch();
     const handleClick = (e) => {
         setEditing(true);
     }
 
+    /* 
+    * Handle Edit Card
+    */
     const handleEditCard = (value) => {
-        dispatch(editTask(value));
+        if (value) {
+            dispatch(editTask({ "value": value, "id": props.no }));
+        }
         setEditing(false);
+    }
+
+    /* 
+    * Handle Delete Card
+    **/
+    const handleDeleteCard = () => {
+        setEditing(false);
+        dispatch(deleteTask(props.no));
     }
 
     const { cardItem } = props;
     return (
         <li className="cardItem">
-            {!editing &&
-                <span add={(e) => handleClick(e)}>{cardItem.taskName}</span>
+            {!editingCard &&
+                <span onClick={(e) => handleClick(e)}>{cardItem.taskName}</span>
             }
-            {editing &&
-                <CardForm taskName={cardItem.taskName} handleEdit={() => handleEditCard()} isEditing></CardForm>
+            {editingCard &&
+                <CardForm taskName={cardItem.taskName}
+                    handleEditCard={(value) => handleEditCard(value)}
+                    handleDeleteCard={() => handleDeleteCard()}
+                    isEditing>
+                </CardForm>
             }
         </li>
     );

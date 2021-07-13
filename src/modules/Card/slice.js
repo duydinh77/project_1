@@ -13,14 +13,15 @@ export const slice = createSlice({
             state.task = [...state.task, newTask];
         },
         editTask: (state, action) => {
-            const index = action.payload[1];
+            const id = action.payload.id;
             const newTask = [...state.task];
-            newTask[index] = action.payload[0];
+            console.log(newTask);
+            newTask[id].taskName = action.payload.value;
             state.task = newTask;
         },
         deleteTask: (state, action) => {
             const newTask = state.task.filter(
-
+                (item) => state.task.indexOf(item) !== action.payload
             );
             state.task = newTask;
         }
