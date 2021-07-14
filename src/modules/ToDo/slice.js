@@ -10,7 +10,7 @@ const initialValue = [
 export const slice = createSlice({
     name: "taskSlice",
     initialState: {
-        task: initialValue,
+        task: [],
     },
     reducers: {
         addNewTask: (state, action) => {
@@ -18,23 +18,29 @@ export const slice = createSlice({
         },
         editTask: (state, action) => {
             const record = action.payload;
-            console.log(state.task);
-            // const newTask = [...state.taskSlice.task];
-            // console.log("Test1", newTask);
-            // const index = newTask.findIndex(item => record.key === item.key)
-            // newTask[index] = record;
-            // console.log("Test2", newTask);
-            // state.task = newTask;
+            const newTask = [...state.task];
+            const index = newTask.findIndex(item => record.key !== item.key)
+            newTask[index] = record;
+            state.task = newTask;
         },
         deleteTask: (state, action) => {
             const newTask = state.task.filter(
-                (item) => state.task.indexOf(item) !== action.payload
+                (item) => item.key !== action.payload
             );
             state.task = newTask;
+        },
+        fetchTodos: () => {
+
+        },
+        fetchTodosSuccess: (data) => {
+            // state.task = data;
+        },
+        fetchTodosFailure: (error) => {
+            console.log(error);
         }
     }
 });
 
-export const { addNewTask, editTask, deleteTask } = slice.actions;
+export const { addNewTask, editTask, deleteTask, fetchTodosSuccess, fetchTodosFailure } = slice.actions;
 export const taskSelector = (state) => state.taskSlice.task;
 export default slice.reducer;

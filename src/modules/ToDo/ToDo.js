@@ -3,16 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Table, Input, Select, Form, Button, Space } from 'antd';
 import { addNewTask, editTask, deleteTask, taskSelector } from './slice';
 
-const originData = [];
-
-for (let i = 0; i < 3; i++) {
-    originData.push({
-        key: i.toString(),
-        taskName: `Edrward ${i}`,
-        taskStatus: 32,
-    });
-}
-
 // "https://60ee57a1eb4c0a0017bf43bf.mockapi.io/tasks"
 
 const EditableCell = ({
@@ -59,17 +49,16 @@ const EditableCell = ({
     );
 };
 
-const EditableTable = () => {
+const ToDo = () => {
     const [form] = Form.useForm();
     const taskList = useSelector(taskSelector);
     const dispatch = useDispatch();
-    // const [data, setData] = useState(taskList);
     const [editingKey, setEditingKey] = useState('');
 
 
     const isEditing = (record) => record.key === editingKey;
 
-    const edit = (record) => {
+    const handleEdit = (record) => {
         form.setFieldsValue({
             taskName: '',
             status: '',
@@ -79,42 +68,30 @@ const EditableTable = () => {
     };
 
     const handleDelete = (key) => {
-        // const newData = [...data];
-        // setData(newData.filter(item => item.key !== key));
+        dispatch(deleteTask(key));
     }
 
     const handleAddTask = () => {
         const newRecord = {};
-        // setData([...data, newRecord]);
         form.setFieldsValue({
             taskName: '',
             status: '',
             ...newRecord,
         });
         setEditingKey(newRecord.key);
+        dispatch(addNewTask(newRecord));
     }
 
-    const cancel = () => {
+    const handleCancle = () => {
         setEditingKey('');
     };
 
-    const save = async (key) => {
+    const handleSave = async (key) => {
         try {
-            const row = await form.validateFields();
-            row.key = key;
-            // const newData = [...data];
-            // const index = newData.findIndex((item) => key === item.key);
-
-            // if (index > -1) {
-            // const item = newData[index];
-            // newData.splice(index, 1, { ...item, ...row });
-            // setData(newData);
-            dispatch(editTask(row));
+            const data = await form.validateFields();
+            data.key = key;
+            dispatch(editTask(data));
             setEditingKey('');
-            // } else {
-            // dispatch(addNewTask())
-            // setEditingKey('');
-            // }
         } catch (errInfo) {
             console.log('Validate Failed:', errInfo);
         }
@@ -139,19 +116,19 @@ const EditableTable = () => {
                 return editable ? (
                     <span>
                         <Button type="link"
-                            onClick={() => save(record.key)}
+                            onClick={() => handleSave(record.key)}
                             style={{
                                 marginRight: 8,
                             }}
                         >Save</Button>
-                        <Button type="link" onClick={cancel}>Cancel</Button>
+                        <Button type="link" onClick={handleCancle}>Cancel</Button>
                     </span>
                 ) : (
                     <Space align="center">
-                        <Button type="primary" disabled={editingKey !== ''} onClick={() => edit(record)}>
+                        <Button type="primary" disabled={editingKey !== ''} onClick={() => handleEdit(record)}>
                             Edit
                         </Button>
-                        <Button type="danger" disabled={editingKey !== ''} onClick={() => handleDelete(record)}>
+                        <Button type="danger" disabled={editingKey !== ''} onClick={() => handleDelete(record.key)}>
                             Delete
                         </Button>
                     </Space>
@@ -205,4 +182,4 @@ const EditableTable = () => {
     );
 };
 
-export default EditableTable;
+export default ToDo;

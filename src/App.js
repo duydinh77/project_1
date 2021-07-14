@@ -1,11 +1,11 @@
 import './App.css';
 import 'antd/dist/antd.css';
 import './index.css';
-import EditableTable from './modules/Card/Card';
+import ToDo from './modules/ToDo/ToDo';
 
 function App() {
   return (
-    <EditableTable></EditableTable>
+    <ToDo></ToDo>
   );
 }
 
