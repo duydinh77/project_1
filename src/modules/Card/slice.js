@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialValue = [{ taskName: "Hello", status: "created" }, { taskName: "World", status: "processing" }];
+const initialValue = [
+    { key: 1, taskName: "Hello", status: "created" },
+    { key: 2, taskName: "World", status: "processing" },
+    { key: 3, taskName: "World1", status: "processing" },
+    { key: 4, taskName: "World2", status: "processing" },
+];
 
 export const slice = createSlice({
     name: "taskSlice",
@@ -9,15 +14,17 @@ export const slice = createSlice({
     },
     reducers: {
         addNewTask: (state, action) => {
-            const newTask = { taskName: action.payload };
-            state.task = [...state.task, newTask];
+            state.task.push(action.payload);
         },
         editTask: (state, action) => {
-            const id = action.payload.id;
-            const newTask = [...state.task];
-            console.log(newTask);
-            newTask[id].taskName = action.payload.value;
-            state.task = newTask;
+            const record = action.payload;
+            console.log(state.task);
+            // const newTask = [...state.taskSlice.task];
+            // console.log("Test1", newTask);
+            // const index = newTask.findIndex(item => record.key === item.key)
+            // newTask[index] = record;
+            // console.log("Test2", newTask);
+            // state.task = newTask;
         },
         deleteTask: (state, action) => {
             const newTask = state.task.filter(

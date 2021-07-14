@@ -46,3 +46,17 @@ const CardItem = (props) => {
 }
 
 export default CardItem;
+
+/* <ul className="card">
+        {listTask.map((item, index) => {
+            return <CardItem key={index} no={index} cardItem={item}></CardItem>
+        })}
+    </ul>
+    <div>
+        {!isAddingCard &&
+            <Button type="primary" block onClick={(e) => handleAddCardClick(e)}> Add a card </Button>
+        }
+        {isAddingCard &&
+            <CardForm handleAddCard={(value) => handleAddCard(value)} isAdding></CardForm>
+        }
+    </div> */
